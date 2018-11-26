@@ -1,0 +1,1 @@
+# A scraper which collects the Character tables from bilbao
