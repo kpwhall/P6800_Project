@@ -26,6 +26,3 @@ def csvRead(filename, fieldnames, data):
                         print bb
                         print aa*bb
                         print
-
-csvWrite('test.csv',['ITA','rot','trans'],test)
-csvRead('test.csv',['ITA','rot','trans'],test)

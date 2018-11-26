@@ -1,10 +1,10 @@
 # A scraper which collects the group elements from bilbao
-from __future__ import division
+
 from bs4 import BeautifulSoup
 import requests
 import re
 import numpy as np
-import csv
+from CSV_writer import csvWrite
 
 page_link = 'http://www.cryst.ehu.es/cgi-bin/cryst/programs/nph-getgen'
 # this is the url that we've already determined is safe and legal to scrape from.
@@ -37,9 +37,4 @@ for x in content:
     a=np.fromstring(x[1].replace('\n', '').replace('1/2','0.5').replace('1/4','0.25').replace('3/4','0.75'), sep=" ", dtype=float).reshape(3,4)
     test.append({'ITA': x[0], 'rot': a[:,0:3], 'trans': a[:,3]})
 
-with open('test.csv', 'wb') as csvfile:
-    fieldnames=['ITA', 'rot', 'trans']
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()
-    for i in test:
-        writer.writerow(i)
+csvWrite('../data/ge/ge205.csv', ['ITA', 'rot', 'trans'], test)
