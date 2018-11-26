@@ -19,5 +19,8 @@ for x in content:
     paragraphs = x.text
     textContent.append(paragraphs)
 
+c=1
 for i in textContent:
+    print c
     print i + "\n"
+    c+=1
