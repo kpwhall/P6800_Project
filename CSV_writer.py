@@ -15,11 +15,15 @@ with open('test.csv') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
         print(row['ITA'], row['rot'], row['trans'])
-        aa=np.array(row['rot'].replace('\n', ','))
-        bb=np.array(row['trans'].replace('\n', ','))
+        print row['rot'].replace("\n","").replace("[","").replace("]","").replace(",","")
+        print row['trans'].replace("\n","").replace("[","").replace("]","").replace(",","")
+        print
+        aa=np.fromstring(row['rot'].replace("\n","").replace("[","").replace("]","").replace(",",""), sep=" ").reshape(3,3)
+        bb=np.fromstring(row['trans'].replace("\n","").replace("[","").replace("]","").replace(",",""), sep=" ")
         print aa
         print bb
-        print 
+        print aa*bb
+        print
 
 
 

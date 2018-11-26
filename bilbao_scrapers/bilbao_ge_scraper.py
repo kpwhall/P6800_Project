@@ -1,7 +1,10 @@
 # A scraper which collects the group elements from bilbao
-
+from __future__ import division
 from bs4 import BeautifulSoup
 import requests
+import re
+import numpy as np
+import csv
 
 page_link = 'http://www.cryst.ehu.es/cgi-bin/cryst/programs/nph-getgen'
 # this is the url that we've already determined is safe and legal to scrape from.
@@ -12,15 +15,31 @@ page_response = requests.post(page_link, data={'gnum': '205', 'list': 'Standard/
 page_content = BeautifulSoup(page_response.content, "html.parser")
 #we use the html parser to parse the url content and store it in a variable.
 
-textContent = []
-content= page_content.find_all("pre")
+tr=page_content.find_all("tr")
 
+i=0
+while True:
+    if i>=len(tr):
+        break
+    elif(not tr[i].find(id=re.compile('op*'))):
+        tr.remove(tr[i])
+    else:
+        i+=1
+
+content=[]
+for r in tr:
+    matrix=r.find("pre").text.encode('ascii','ignore')
+    ita=r.find_all("td")[6].text.encode('ascii','ignore')
+    content.append((ita,matrix))
+
+test=[]
 for x in content:
-    paragraphs = x.text
-    textContent.append(paragraphs)
+    a=np.fromstring(x[1].replace('\n', '').replace('1/2','0.5').replace('1/4','0.25').replace('3/4','0.75'), sep=" ", dtype=float).reshape(3,4)
+    test.append({'ITA': x[0], 'rot': a[:,0:3], 'trans': a[:,3]})
 
-c=1
-for i in textContent:
-    print c
-    print i + "\n"
-    c+=1
+with open('test.csv', 'wb') as csvfile:
+    fieldnames=['ITA', 'rot', 'trans']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    for i in test:
+        writer.writerow(i)
