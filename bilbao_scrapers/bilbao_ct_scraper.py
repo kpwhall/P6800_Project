@@ -7,7 +7,7 @@ from sympy import symbols, sympify
 from sympy.matrices import Matrix
 from CSV_IO import csvWrite
 
-SPACE=221
+SPACE=204
 x,y,z=symbols('x y z')
 
 page_link = 'http://www.cryst.ehu.es/cgi-bin/rep/programs/sam/point.py?sg='+str(SPACE)+'&num=0'
@@ -45,7 +45,7 @@ for r in tr:
         for i in range(len(td)-3):
             string=str(td[i+2].find("nobr"))
             string=string.replace('<sup>','').replace('</sup>','').replace('<nobr>','').replace('</nobr>','')
-            string=string.replace('w2','exp(-2 i Pi/3)').replace('w','exp(2 i Pi/3)').split('<br/>')    # Does it have to be w=exp(2 i pi/3)?
+            string=string.replace('w2','exp(-2*I*pi/3)').replace('w','exp(2*I*pi/3)').split('<br/>')    # Does it have to be w=exp(2 i pi/3)?
             char[0].append({cls[i]: string[0]})
             char[1].append({cls[i]: string[1]})
         for i in range(2):
