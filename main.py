@@ -1,5 +1,5 @@
 from CSV_IO import csvRead
-from sympy import symbols, sympify, exp, I, pi
+from sympy import symbols, sympify, exp, I, pi, solve_linear_system, Transpose
 from sympy.matrices import Matrix
 import os.path
 
@@ -32,25 +32,27 @@ for x in ge:
         classList.append(x[0].split()[0])
         transforms.append([Matrix(sympify(x[1])),Matrix(sympify(x[2])),x[0]])
 
-charIR=[]
-charTab=[]
+#Serialize character table
+charIR,charTab=[],[]
 i=0
 for t in ct:
     charIR.append(t[0])
     charTab.append([])
     for l in t[1].replace('[','').replace(']','').split(','):
         a=l.replace('{','').replace('}','').replace("'","").split(':')
-        charTab[i].append({a[0]: sympify(a[1])})
+        charTab[i].append({"Class": a[0].strip(), "Value": sympify(a[1])})
     i+=1
 
+print classList
 for i in range(len(charIR)):
-    print charIR[i]
+    class_map = {c['Class']: c for c in charTab[i]}
+    charTab[i] = [class_map[id]["Value"] for id in classList]
     print charTab[i],"\n"
 
-exit()
+
 print "Classes:"
 print " ", classList
-print " ", ct[1],"\n"
+print " ", charTab[1],"\n"
 
 #Serialize all Wyckoff positions. May easily be changed to take only a selected Wyckoff position if required.
 pos, ptitle=[],[]
@@ -103,4 +105,21 @@ for i in range(len(ptitle)):
     char.append([])
     for j in range(len(achar[i])):
         char[i].append(achar[i][j]*dchar[j])
-    print ptitle[i],char[i]
+    print ptitle[i],char[i],"\n"
+
+
+systemSeed=Matrix()
+for r in charTab:
+    print r
+    print len(systemSeed)/len(r)
+    systemSeed=systemSeed.col_insert(len(systemSeed)/len(r),Matrix(r))   # Need to ensure the columns are lined up correctly.
+print "\n",systemSeed,"\n"
+
+# a=(symbols('a0:'+str(len(charTab[0]))))
+a,b,c,d,e,f,g,h=symbols('a,b,c,d,e,f,g,h') # How to make this general? It won't accept the above.
+exit()
+for i in range(len(ptitle)):
+    system=systemSeed.col_insert(len(charTab[i]),Matrix(char[i]))
+    print ptitle[i],solve_linear_system(system,a,b,c,d,e,f,g,h)
+
+
