@@ -1,0 +1,567 @@
+Mult,Letter,Symm,Pos
+48,n,1,"[Matrix([
+[x],
+[y],
+[z]]), Matrix([
+[-x],
+[-y],
+[ z]]), Matrix([
+[-x],
+[ y],
+[-z]]), Matrix([
+[ x],
+[-y],
+[-z]]), Matrix([
+[z],
+[x],
+[y]]), Matrix([
+[ z],
+[-x],
+[-y]]), Matrix([
+[-z],
+[-x],
+[ y]]), Matrix([
+[-z],
+[ x],
+[-y]]), Matrix([
+[y],
+[z],
+[x]]), Matrix([
+[-y],
+[ z],
+[-x]]), Matrix([
+[ y],
+[-z],
+[-x]]), Matrix([
+[-y],
+[-z],
+[ x]]), Matrix([
+[ y],
+[ x],
+[-z]]), Matrix([
+[-y],
+[-x],
+[-z]]), Matrix([
+[ y],
+[-x],
+[ z]]), Matrix([
+[-y],
+[ x],
+[ z]]), Matrix([
+[ x],
+[ z],
+[-y]]), Matrix([
+[-x],
+[ z],
+[ y]]), Matrix([
+[-x],
+[-z],
+[-y]]), Matrix([
+[ x],
+[-z],
+[ y]]), Matrix([
+[ z],
+[ y],
+[-x]]), Matrix([
+[ z],
+[-y],
+[ x]]), Matrix([
+[-z],
+[ y],
+[ x]]), Matrix([
+[-z],
+[-y],
+[-x]]), Matrix([
+[-x],
+[-y],
+[-z]]), Matrix([
+[ x],
+[ y],
+[-z]]), Matrix([
+[ x],
+[-y],
+[ z]]), Matrix([
+[-x],
+[ y],
+[ z]]), Matrix([
+[-z],
+[-x],
+[-y]]), Matrix([
+[-z],
+[ x],
+[ y]]), Matrix([
+[ z],
+[ x],
+[-y]]), Matrix([
+[ z],
+[-x],
+[ y]]), Matrix([
+[-y],
+[-z],
+[-x]]), Matrix([
+[ y],
+[-z],
+[ x]]), Matrix([
+[-y],
+[ z],
+[ x]]), Matrix([
+[ y],
+[ z],
+[-x]]), Matrix([
+[-y],
+[-x],
+[ z]]), Matrix([
+[y],
+[x],
+[z]]), Matrix([
+[-y],
+[ x],
+[-z]]), Matrix([
+[ y],
+[-x],
+[-z]]), Matrix([
+[-x],
+[-z],
+[ y]]), Matrix([
+[ x],
+[-z],
+[-y]]), Matrix([
+[x],
+[z],
+[y]]), Matrix([
+[-x],
+[ z],
+[-y]]), Matrix([
+[-z],
+[-y],
+[ x]]), Matrix([
+[-z],
+[ y],
+[-x]]), Matrix([
+[ z],
+[-y],
+[-x]]), Matrix([
+[z],
+[y],
+[x]])]"
+24,m,..m,"[Matrix([
+[x],
+[x],
+[z]]), Matrix([
+[-x],
+[-x],
+[ z]]), Matrix([
+[-x],
+[ x],
+[-z]]), Matrix([
+[ x],
+[-x],
+[-z]]), Matrix([
+[z],
+[x],
+[x]]), Matrix([
+[ z],
+[-x],
+[-x]]), Matrix([
+[-z],
+[-x],
+[ x]]), Matrix([
+[-z],
+[ x],
+[-x]]), Matrix([
+[x],
+[z],
+[x]]), Matrix([
+[-x],
+[ z],
+[-x]]), Matrix([
+[ x],
+[-z],
+[-x]]), Matrix([
+[-x],
+[-z],
+[ x]]), Matrix([
+[ x],
+[ x],
+[-z]]), Matrix([
+[-x],
+[-x],
+[-z]]), Matrix([
+[ x],
+[-x],
+[ z]]), Matrix([
+[-x],
+[ x],
+[ z]]), Matrix([
+[ x],
+[ z],
+[-x]]), Matrix([
+[-x],
+[ z],
+[ x]]), Matrix([
+[-x],
+[-z],
+[-x]]), Matrix([
+[ x],
+[-z],
+[ x]]), Matrix([
+[ z],
+[ x],
+[-x]]), Matrix([
+[ z],
+[-x],
+[ x]]), Matrix([
+[-z],
+[ x],
+[ x]]), Matrix([
+[-z],
+[-x],
+[-x]])]"
+24,l,m..,"[Matrix([
+[1/2],
+[  y],
+[  z]]), Matrix([
+[1/2],
+[ -y],
+[  z]]), Matrix([
+[1/2],
+[  y],
+[ -z]]), Matrix([
+[1/2],
+[ -y],
+[ -z]]), Matrix([
+[  z],
+[1/2],
+[  y]]), Matrix([
+[  z],
+[1/2],
+[ -y]]), Matrix([
+[ -z],
+[1/2],
+[  y]]), Matrix([
+[ -z],
+[1/2],
+[ -y]]), Matrix([
+[  y],
+[  z],
+[1/2]]), Matrix([
+[ -y],
+[  z],
+[1/2]]), Matrix([
+[  y],
+[ -z],
+[1/2]]), Matrix([
+[ -y],
+[ -z],
+[1/2]]), Matrix([
+[  y],
+[1/2],
+[ -z]]), Matrix([
+[ -y],
+[1/2],
+[ -z]]), Matrix([
+[  y],
+[1/2],
+[  z]]), Matrix([
+[ -y],
+[1/2],
+[  z]]), Matrix([
+[1/2],
+[  z],
+[ -y]]), Matrix([
+[1/2],
+[  z],
+[  y]]), Matrix([
+[1/2],
+[ -z],
+[ -y]]), Matrix([
+[1/2],
+[ -z],
+[  y]]), Matrix([
+[  z],
+[  y],
+[1/2]]), Matrix([
+[  z],
+[ -y],
+[1/2]]), Matrix([
+[ -z],
+[  y],
+[1/2]]), Matrix([
+[ -z],
+[ -y],
+[1/2]])]"
+24,k,m..,"[Matrix([
+[0],
+[y],
+[z]]), Matrix([
+[ 0],
+[-y],
+[ z]]), Matrix([
+[ 0],
+[ y],
+[-z]]), Matrix([
+[ 0],
+[-y],
+[-z]]), Matrix([
+[z],
+[0],
+[y]]), Matrix([
+[ z],
+[ 0],
+[-y]]), Matrix([
+[-z],
+[ 0],
+[ y]]), Matrix([
+[-z],
+[ 0],
+[-y]]), Matrix([
+[y],
+[z],
+[0]]), Matrix([
+[-y],
+[ z],
+[ 0]]), Matrix([
+[ y],
+[-z],
+[ 0]]), Matrix([
+[-y],
+[-z],
+[ 0]]), Matrix([
+[ y],
+[ 0],
+[-z]]), Matrix([
+[-y],
+[ 0],
+[-z]]), Matrix([
+[y],
+[0],
+[z]]), Matrix([
+[-y],
+[ 0],
+[ z]]), Matrix([
+[ 0],
+[ z],
+[-y]]), Matrix([
+[0],
+[z],
+[y]]), Matrix([
+[ 0],
+[-z],
+[-y]]), Matrix([
+[ 0],
+[-z],
+[ y]]), Matrix([
+[z],
+[y],
+[0]]), Matrix([
+[ z],
+[-y],
+[ 0]]), Matrix([
+[-z],
+[ y],
+[ 0]]), Matrix([
+[-z],
+[-y],
+[ 0]])]"
+12,j,m.m 2,"[Matrix([
+[1/2],
+[  y],
+[  y]]), Matrix([
+[1/2],
+[ -y],
+[  y]]), Matrix([
+[1/2],
+[  y],
+[ -y]]), Matrix([
+[1/2],
+[ -y],
+[ -y]]), Matrix([
+[  y],
+[1/2],
+[  y]]), Matrix([
+[  y],
+[1/2],
+[ -y]]), Matrix([
+[ -y],
+[1/2],
+[  y]]), Matrix([
+[ -y],
+[1/2],
+[ -y]]), Matrix([
+[  y],
+[  y],
+[1/2]]), Matrix([
+[ -y],
+[  y],
+[1/2]]), Matrix([
+[  y],
+[ -y],
+[1/2]]), Matrix([
+[ -y],
+[ -y],
+[1/2]])]"
+12,i,m.m 2,"[Matrix([
+[0],
+[y],
+[y]]), Matrix([
+[ 0],
+[-y],
+[ y]]), Matrix([
+[ 0],
+[ y],
+[-y]]), Matrix([
+[ 0],
+[-y],
+[-y]]), Matrix([
+[y],
+[0],
+[y]]), Matrix([
+[ y],
+[ 0],
+[-y]]), Matrix([
+[-y],
+[ 0],
+[ y]]), Matrix([
+[-y],
+[ 0],
+[-y]]), Matrix([
+[y],
+[y],
+[0]]), Matrix([
+[-y],
+[ y],
+[ 0]]), Matrix([
+[ y],
+[-y],
+[ 0]]), Matrix([
+[-y],
+[-y],
+[ 0]])]"
+12,h,mm2 . .,"[Matrix([
+[  x],
+[1/2],
+[  0]]), Matrix([
+[ -x],
+[1/2],
+[  0]]), Matrix([
+[  0],
+[  x],
+[1/2]]), Matrix([
+[  0],
+[ -x],
+[1/2]]), Matrix([
+[1/2],
+[  0],
+[  x]]), Matrix([
+[1/2],
+[  0],
+[ -x]]), Matrix([
+[1/2],
+[  x],
+[  0]]), Matrix([
+[1/2],
+[ -x],
+[  0]]), Matrix([
+[  x],
+[  0],
+[1/2]]), Matrix([
+[ -x],
+[  0],
+[1/2]]), Matrix([
+[  0],
+[1/2],
+[ -x]]), Matrix([
+[  0],
+[1/2],
+[  x]])]"
+8,g,.3m,"[Matrix([
+[x],
+[x],
+[x]]), Matrix([
+[-x],
+[-x],
+[ x]]), Matrix([
+[-x],
+[ x],
+[-x]]), Matrix([
+[ x],
+[-x],
+[-x]]), Matrix([
+[ x],
+[ x],
+[-x]]), Matrix([
+[-x],
+[-x],
+[-x]]), Matrix([
+[ x],
+[-x],
+[ x]]), Matrix([
+[-x],
+[ x],
+[ x]])]"
+6,f,4m. m,"[Matrix([
+[  x],
+[1/2],
+[1/2]]), Matrix([
+[ -x],
+[1/2],
+[1/2]]), Matrix([
+[1/2],
+[  x],
+[1/2]]), Matrix([
+[1/2],
+[ -x],
+[1/2]]), Matrix([
+[1/2],
+[1/2],
+[  x]]), Matrix([
+[1/2],
+[1/2],
+[ -x]])]"
+6,e,4m. m,"[Matrix([
+[x],
+[0],
+[0]]), Matrix([
+[-x],
+[ 0],
+[ 0]]), Matrix([
+[0],
+[x],
+[0]]), Matrix([
+[ 0],
+[-x],
+[ 0]]), Matrix([
+[0],
+[0],
+[x]]), Matrix([
+[ 0],
+[ 0],
+[-x]])]"
+3,d,4/mm. m,"[Matrix([
+[1/2],
+[  0],
+[  0]]), Matrix([
+[  0],
+[1/2],
+[  0]]), Matrix([
+[  0],
+[  0],
+[1/2]])]"
+3,c,4/mm. m,"[Matrix([
+[  0],
+[1/2],
+[1/2]]), Matrix([
+[1/2],
+[  0],
+[1/2]]), Matrix([
+[1/2],
+[1/2],
+[  0]])]"
+1,b,m-3m,"[Matrix([
+[1/2],
+[1/2],
+[1/2]])]"
+1,a,m-3m,"[Matrix([
+[0],
+[0],
+[0]])]"

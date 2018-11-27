@@ -3,19 +3,28 @@ from sympy import symbols, sympify
 from sympy.matrices import Matrix
 
 # Parameter definitions ############################
-SPACE=204   # Space group being considered
+SPACE=int(input("Select a space group: (Only 198,204,205,221 for testing purposes): "))   # Space group being considered
 
 # Collect data on space groups
 ge = csvRead("./data/ge/ge"+str(SPACE)+".csv", ['ITA', 'rot', 'trans'])
 wp = csvRead("./data/wp/wp"+str(SPACE)+".csv", ['Mult', 'Letter', 'Symm', 'Pos'])
+ct = csvRead("./data/ct/ct"+str(SPACE)+".csv", ["IR","Char"])
+
+for t in ct:
+    print t
+exit()
 
 #Get transforms. For the purposes of this program, one per class is all that's needed, so we can disregard the rest.
+#   This method of getting classes doesn't seem to work for Oh symmetry. 4+ and 4- should be in the same class.
 transforms=[]
 classList=[]
 for x in ge:
     if (not x[0].split()[0] in classList):
         classList.append(x[0].split()[0])
         transforms.append([Matrix(sympify(x[1])),Matrix(sympify(x[2])),x[0]])
+
+print "Classes:"
+print " ", classList, "\n"
 
 #Get all Wyckoff positions. May easily be changed to take only a selected Wyckoff position if required.
 pos, ptitle=[],[]
@@ -28,6 +37,11 @@ for x in wp:
         z=y.replace('[M','M').replace(')]',')') # Removes left over braces
         pos[i].append(Matrix(sympify(z)))
     i+=1
+
+for i in range(len(ptitle)):
+    print ptitle[i]
+    for j in pos[i]:
+        print " ", j, "\n"
 
 # Atomic character
 i=0
@@ -64,9 +78,3 @@ for i in range(len(ptitle)):
         char[i].append(achar[i][j]*dchar[j])
     print char[i]
     print
-
-myset=[]
-for i in transforms:
-    myset.append(i[2].split()[0])
-
-print list(set(myset))

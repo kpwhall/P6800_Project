@@ -11,7 +11,7 @@ x,y,z=symbols('x y z')
 page_link = 'http://www.cryst.ehu.es/cgi-bin/cryst/programs/nph-wp-list'
 # this is the url that we've already determined is safe and legal to scrape from.
 
-page_response = requests.post(page_link, data={'gnum': '205', 'list': 'Standard/Default+Setting'} ,timeout=10)
+page_response = requests.post(page_link, data={'gnum': '221', 'list': 'Standard/Default+Setting'} ,timeout=10)
 # here, we fetch the content from the url, using the requests library
 
 page_content = BeautifulSoup(page_response.content, "html.parser")
@@ -50,4 +50,4 @@ data=[]
 for x in content:
     data.append({'Mult': x[0], 'Letter': x[1], 'Symm': x[2], 'Pos': x[3]})
 
-csvWrite('../data/wp/wp205.csv', ['Mult', 'Letter', 'Symm', 'Pos'], data)
+csvWrite('../data/wp/wp221.csv', ['Mult', 'Letter', 'Symm', 'Pos'], data)
