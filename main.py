@@ -1,2 +1,4 @@
-import csv
-import numpy as np
+import CSV_writer
+
+SPACE=205
+K=[0,0,0]
