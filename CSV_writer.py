@@ -12,20 +12,13 @@ def csvWrite(filename, fieldnames, data):
             writer.writerow(i)
 
 
-def csvRead(filename, fieldnames, data):
+def csvRead(filename, fieldnames):
+        ge=[]
         with open(filename) as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
-                        print row[fieldnames[0]]
-                        print row['rot'].replace("\n","").replace("[","").replace("]","").replace(",","")
-                        print row['trans'].replace("\n","").replace("[","").replace("]","").replace(",","")
-                        print
-                        aa=np.fromstring(row['rot'].replace("\n","").replace("[","").replace("]","").replace(",",""), sep=" ").reshape(3,3)
-                        bb=np.fromstring(row['trans'].replace("\n","").replace("[","").replace("]","").replace(",",""), sep=" ")
-                        print aa
-                        print bb
-                        print aa*bb
-                        print
-
-csvWrite('test.csv',['ITA','rot','trans'],test)
-csvRead('test.csv',['ITA','rot','trans'],test)
+                        a=np.fromstring(row['rot'].replace("\n","").replace("[","").replace("]","").replace(",",""), sep=" ").reshape(3,3)
+                        b=np.fromstring(row['trans'].replace("\n","").replace("[","").replace("]","").replace(",",""), sep=" ")
+                        ge.append((a,b))
+        return ge
+                        

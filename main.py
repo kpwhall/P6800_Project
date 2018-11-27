@@ -1,4 +1,8 @@
-import CSV_writer
+from CSV_writer import csvRead
+import numpy as np
 
-SPACE=205
+SPACE=204
 K=[0,0,0]
+POS=[np.array([[0],[0],[0]]),np.array([[1./2],[1./2],[1./2]])]
+
+print csvRead("./data/ge/ge"+str(SPACE)+".csv", ['ITA', 'rot', 'trans'])
