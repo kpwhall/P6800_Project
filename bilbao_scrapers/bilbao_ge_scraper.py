@@ -23,8 +23,6 @@ i=0
 while True:
     if i>=len(tr):
         break
-    if tr[i].parent.id==re.compile('^row1'):
-        print "here"
     elif(not tr[i].find(id=re.compile('^op[0-9]+'))):
         tr.remove(tr[i])
     else:
