@@ -1,5 +1,5 @@
 from CSV_IO import csvRead
-from sympy import symbols, sympify, exp, I, pi, solve_linear_system, Transpose
+from sympy import symbols, sympify, exp, I, pi, solve_linear_system, simplify
 from sympy.matrices import Matrix
 import os.path
 
@@ -43,16 +43,12 @@ for t in ct:
         charTab[i].append({"Class": a[0].strip(), "Value": sympify(a[1])})
     i+=1
 
-print classList
 for i in range(len(charIR)):
     class_map = {c['Class']: c for c in charTab[i]}
     charTab[i] = [class_map[id]["Value"] for id in classList]
-    print charTab[i],"\n"
-
 
 print "Classes:"
-print " ", classList
-print " ", charTab[1],"\n"
+print classList
 
 #Serialize all Wyckoff positions. May easily be changed to take only a selected Wyckoff position if required.
 pos, ptitle=[],[]
@@ -66,11 +62,11 @@ for x in wp:
         pos[i].append(Matrix(sympify(z)))
     i+=1
 
-for i in range(len(ptitle)):
-    print ptitle[i]
-    for j in pos[i]:
-        print " ", j
-print 
+# for i in range(len(ptitle)):
+#     print ptitle[i]
+#     for j in pos[i]:
+#         print " ", j
+# print 
 
 # Atomic character
 i=0
@@ -100,26 +96,29 @@ for t in transforms:
 
 #characters
 char=[]
-print " ", classList
 for i in range(len(ptitle)):
     char.append([])
     for j in range(len(achar[i])):
         char[i].append(achar[i][j]*dchar[j])
-    print ptitle[i],char[i],"\n"
-
+    print ptitle[i],char[i]
+print
 
 systemSeed=Matrix()
 for r in charTab:
-    print r
-    print len(systemSeed)/len(r)
     systemSeed=systemSeed.col_insert(len(systemSeed)/len(r),Matrix(r))   # Need to ensure the columns are lined up correctly.
-print "\n",systemSeed,"\n"
 
-# a=(symbols('a0:'+str(len(charTab[0]))))
-a,b,c,d,e,f,g,h=symbols('a,b,c,d,e,f,g,h') # How to make this general? It won't accept the above.
-exit()
+a=symbols('a0:'+str(len(charTab[0])))
+# a,b,c,d,e,f,g,h=symbols('a,b,c,d,e,f,g,h') # How to make this general? It won't accept the above.
+
 for i in range(len(ptitle)):
     system=systemSeed.col_insert(len(charTab[i]),Matrix(char[i]))
-    print ptitle[i],solve_linear_system(system,a,b,c,d,e,f,g,h)
+    # ss=solve_linear_system(system,a[0],a[1],a[2],a[3])
+    ss=solve_linear_system(system,a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7])
+    for j in a:
+        ss[j]=ss[j].expand(complex=True)
+    print ptitle[i], ss
+
+#So, solve will accept a list of values, but solve_linear_system will not. Bummer.
+# Why are there fractions?
 
 
