@@ -7,7 +7,7 @@ from sympy import symbols, sympify  # can be removed
 from sympy.matrices import Matrix # can be removed
 from CSV_IO import csvWrite
 
-SPACE=221
+SPACE=227
 x,y,z=symbols('x y z')
 
 page_link = 'http://www.cryst.ehu.es/cgi-bin/rep/programs/sam/point.py?sg='+str(SPACE)+'&num=0'

@@ -6,10 +6,12 @@ from sympy import symbols, sympify
 from sympy.matrices import Matrix
 from CSV_IO import csvWrite
 
+SPACE=227
+
 page_link = 'http://www.cryst.ehu.es/cgi-bin/cryst/programs/nph-getgen'
 # this is the url that we've already determined is safe and legal to scrape from.
 
-page_response = requests.post(page_link, data={'gnum': '221', 'list': 'Standard/Default+Setting', 'what': 'gp'} ,timeout=10)
+page_response = requests.post(page_link, data={'gnum': str(SPACE), 'list': 'Standard/Default+Setting', 'what': 'gp'} ,timeout=10)
 # here, we fetch the content from the url, using the requests library
 
 page_content = BeautifulSoup(page_response.content, "html.parser")
@@ -40,4 +42,4 @@ for x in content:
     a=Matrix(sympify(x[1]))
     data.append({'ITA': x[0], 'rot': a[:,0:3], 'trans': a[:,3]})
 
-csvWrite('../data/ge/ge221.csv', ['ITA', 'rot', 'trans'], data)
+csvWrite('../data/ge/ge'+str(SPACE)+'.csv', ['ITA', 'rot', 'trans'], data)

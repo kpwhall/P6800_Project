@@ -48,8 +48,9 @@ for i in range(len(charIR)):
     class_map = {c['Class']: c for c in charTab[i]}
     charTab[i] = [class_map[id]["Value"] for id in classList]
 
-print "Classes:"
 print classList
+for i in charTab:
+    print i
 
 #Serialize all Wyckoff positions. May easily be changed to take only a selected Wyckoff position if required.
 pos, ptitle=[],[]
@@ -74,7 +75,7 @@ for a in pos:
         count=0
         for b in a:
             c=t[0]*b+t[1]
-            if not (c in a):    # If outside of cell, place inside. THIS DOESN'T WORK FOR 204 BECAUSE I ONLY HAVE HALF of the WYCKOFF positions. Also need all positions + 1/2,1/2,1/2!
+            if not (c in a):    # If outside of cell, place inside.
                 d=c.subs(subZero)
                 for j in range(len(d)):
                     c[j]=c[j]-1 if d[j]>=1 else c[j]
@@ -115,12 +116,10 @@ for r in charTab:
 
 a=symbols('a0:'+str(len(charTab[0])))
 
-# a,b,c,d,e,f,g,h=symbols('a,b,c,d,e,f,g,h') # How to make this general? It won't accept the above.
-
 for i in range(len(ptitle)):
     system=systemSeed.col_insert(len(charTab[i]),Matrix(char[i]))
-    # ss=solve_linear_system(system,a[0],a[1],a[2],a[3])
-    ss=solve_linear_system(system,a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7])
+    ss=solve_linear_system(system,a[0],a[1],a[2],a[3])
+    # ss=solve_linear_system(system,a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7])
     for j in a:
         ss[j]=ss[j].expand(complex=True)
     print ptitle[i], ss
