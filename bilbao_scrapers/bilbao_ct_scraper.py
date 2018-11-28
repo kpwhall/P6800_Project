@@ -2,9 +2,9 @@
 #
 
 from bs4 import BeautifulSoup
-import requests, re
-from sympy import symbols, sympify
-from sympy.matrices import Matrix
+import requests, re # re not used here
+from sympy import symbols, sympify  # can be removed
+from sympy.matrices import Matrix # can be removed
 from CSV_IO import csvWrite
 
 SPACE=221

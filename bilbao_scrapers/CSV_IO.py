@@ -1,6 +1,6 @@
 import csv
-from sympy import symbols, sympify
-from sympy.matrices import Matrix
+from sympy import symbols, sympify # Can be removed
+from sympy.matrices import Matrix # Can be removed
 
 def csvWrite(filename, fieldnames, data):
     with open(filename, 'wb') as csvfile:
