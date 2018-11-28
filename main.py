@@ -62,13 +62,8 @@ for x in wp:
         pos[i].append(Matrix(sympify(z)))
     i+=1
 
-# for i in range(len(ptitle)):
-#     print ptitle[i]
-#     for j in pos[i]:
-#         print " ", j
-# print 
-
 # Atomic character
+# need to updated to move things back into the cell.
 i=0
 achar=[]
 for x in pos:
@@ -120,5 +115,6 @@ for i in range(len(ptitle)):
 
 #So, solve will accept a list of values, but solve_linear_system will not. Bummer.
 # Why are there fractions?
+# I forgot to pull things back inside the unit cell. That could explain it!
 
 
