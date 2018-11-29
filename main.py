@@ -1,71 +1,89 @@
 from CSV_IO import csvRead
-from sympy import symbols, sympify, exp, I, pi, solve_linear_system, simplify
+from sympy import symbols, sympify, exp, I, \
+                    pi, solve_linear_system
 from sympy.matrices import Matrix
 import os.path
 
 # Parameter definitions ############################
-SPACE=int(input("Select a space group: (Only 198,204,205,221 for testing purposes): "))   # Space group being considered
-x,y,z=symbols('x y z')
+SPACE=int(input("Select a space group (Only 198,204 are testable): "))   # Space group being considered
+x,y,z=symbols('x y z')                                                   # Set x, y, z as symbols for sympy symbolic computation
 
 # Collect data on space groups
+#   In each case, first check that the file you are looking for exists.
+#       If they exist read in the data.
+#       If they don't exist, exit.
 if os.path.exists("./data/ge/ge"+str(SPACE)+".csv"):
-    ge = csvRead("./data/ge/ge"+str(SPACE)+".csv", ['ITA', 'rot', 'trans'])
+    ge = csvRead("./data/ge/ge"+str(SPACE)+".csv", ['ITA', 'rot', 'trans'])             # Read in Group Element data from .csv file
 else:
-    print "File not found, Scraper not yet implemented for general case. Exiting"
+    print "File not found. Scraper not yet implemented for general case. Exiting"
     exit()
 if os.path.exists("./data/wp/wp"+str(SPACE)+".csv"):
-    wp = csvRead("./data/wp/wp"+str(SPACE)+".csv", ['Mult', 'Letter', 'Symm', 'Pos'])
+    wp = csvRead("./data/wp/wp"+str(SPACE)+".csv", ['Mult', 'Letter', 'Symm', 'Pos'])   # Read in Wyckoff Position data from .csv file
 else:    
-    print "File not found, Scraper not yet implemented for general case. Exiting"
+    print "File not found. Scraper not yet implemented for general case. Exiting"
     exit()
 if os.path.exists("./data/ct/ct"+str(SPACE)+".csv"):
-    ct = csvRead("./data/ct/ct"+str(SPACE)+".csv", ["IR","Char"])
+    ct = csvRead("./data/ct/ct"+str(SPACE)+".csv", ["IR","Char"])                       # Read in Character Table data from .csv file
 else:    
-    print "File not found, Scraper not yet implemented for general case. Exiting"
+    print "File not found. Scraper not yet implemented for general case. Exiting"
     exit()
 
-#Serialize transforms. For the purposes of this program, one per class is all that's needed, so we can disregard the rest.
-#   This method of getting classes doesn't seem to work. E.g., for Oh symmetry. 4+ and 4- should be in the same class.
-transforms=[]
-classList=[]
+# Deserialise group element data
+#   Take each group element in the data and convert it to a form usable by this code.
+#   Collect classes and a single group element from each class by only considering the first part of the name.
+#       This method of getting classes doesn't work as there isn't a 1:1 correlation between element names and class names
+#
+transforms,classList=[],[]  # transforms Contains list of group elements as a list [Rotation, Transform, Name]    
+                            # classList Contains (incorrect, see above) list of classes
 for g in ge:
     if (not g[0].split()[0] in classList):
         classList.append(g[0].split()[0])
         transforms.append([Matrix(sympify(g[1])),Matrix(sympify(g[2])),g[0]])
 
-#Serialize character table
-charIR,charTab=[],[]
-i=0
+# Deserialise character table data
+#   Take each element of the character tables from data and convert to a form usable by this code.
+#
+charIR,charTab=[],[]    # charIR contains list of IR names
+                        # charTab contains list of characters
+i=0                     # Iterator
 for t in ct:
-    charIR.append(t[0])
+    charIR.append(t[0])             
     charTab.append([])
     for l in t[1].replace('[','').replace(']','').split(','):
         a=l.replace('{','').replace('}','').replace("'","").split(':')
         charTab[i].append({"Class": a[0].strip(), "Value": sympify(a[1])})
     i+=1
 
+# Sort charTab to match ordering in classList
+#
 for i in range(len(charIR)):
-    class_map = {c['Class']: c for c in charTab[i]}
-    charTab[i] = [class_map[id]["Value"] for id in classList]
+    class_map = {c['Class']: c for c in charTab[i]}             # class_map is dict of columns (classes) in charTab
+    charTab[i] = [class_map[id]["Value"] for id in classList]   # charTab sorted such that rows match classList
 
+# Print character table to screen
+#
 print classList
 for i in charTab:
     print i
+print
 
-#Serialize all Wyckoff positions. May easily be changed to take only a selected Wyckoff position if required.
-pos, ptitle=[],[]
-i=0
+# Deserialise wyckoff position data
+#   
+#
+perUnitCell=int(wp.pop(0)[0])   # Number of primitive cells per unit cell extracted from data
+i=0                             # Iterator
+pos, ptitle=[],[]               # pos contains the Wyckoff positions
+                                # ptitle contains the names of the Wyckoff positions (Multiplicty+Letter)
 for a in wp:
     ptitle.append(a[0]+a[1])
-    pos.append(i)
-    pos[i]=[]
+    pos.append([])
     for b in a[3].split(', '):
         c=b.replace('[M','M').replace(')]',')') # Removes left over braces
         pos[i].append(Matrix(sympify(c)))
     i+=1
 
-# Atomic character
-# need to updated to move things back into the cell.
+# Calculate atomic character
+#
 i=0
 achar=[]
 subZero=[(x,0),(y,0),(z,0)]
@@ -82,11 +100,11 @@ for a in pos:
                     c[j]=c[j]+1 if d[j]<0 else c[j]
             if c==b:
                 count+=1
-        achar[i].append(count)
+        achar[i].append(count/perUnitCell)
     i+=1
-    
 
-# Displacement character
+# Calculate displacement character
+#
 vec=Matrix(sympify("[[x],[y],[z]]"))
 dchar=[]
 i=0
@@ -114,18 +132,19 @@ systemSeed=Matrix()
 for r in charTab:
     systemSeed=systemSeed.col_insert(len(systemSeed)/len(r),Matrix(r))   # Need to ensure the columns are lined up correctly.
 
-a=symbols('a0:'+str(len(charTab[0])))
+a=[]
+comm="ss=solve_linear_system(system"
+for i in charIR:
+    a.append(symbols(str(i)))
+    comm=comm+",a["+str(len(a)-1)+"]"
+comm=comm+")"
 
 for i in range(len(ptitle)):
     system=systemSeed.col_insert(len(charTab[i]),Matrix(char[i]))
-    ss=solve_linear_system(system,a[0],a[1],a[2],a[3])
-    # ss=solve_linear_system(system,a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7])
+    exec(comm)
     for j in a:
         ss[j]=ss[j].expand(complex=True)
     print ptitle[i], ss
 
 #So, solve will accept a list of values, but solve_linear_system will not. Bummer.
-# Why are there fractions?
-# I forgot to pull things back inside the unit cell. That could explain it!
-
-
+# Is perUnitCell needed? It leads to fractional values... Work out 204 8c myself, I guess.

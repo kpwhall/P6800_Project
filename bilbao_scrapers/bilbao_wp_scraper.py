@@ -1,13 +1,13 @@
 # A scraper which collects the Wyckoff positions from bilbao
-
+#
 from bs4 import BeautifulSoup
-import requests, re
+import requests
 from sympy import symbols, sympify
 from sympy.matrices import Matrix
 from CSV_IO import csvWrite
 
 x,y,z=symbols('x y z')
-SPACE=227
+SPACE=204
 
 page_link = 'http://www.cryst.ehu.es/cgi-bin/cryst/programs/nph-wp-list'
 # this is the url that we've already determined is safe and legal to scrape from.
@@ -19,6 +19,9 @@ page_content = BeautifulSoup(page_response.content, "html.parser")
 #we use the html parser to parse the url content and store it in a variable.
 
 tr=page_content.find_all("tr")
+coor=[]
+for c in tr[2].text.encode('ascii','ignore').split("+")[1:-1]:
+    coor.append(Matrix(sympify(c.strip().replace("(","").replace(")",""))))
 
 i=0
 while True:
@@ -28,14 +31,14 @@ while True:
         tr.remove(tr[i])
     else:
         i+=1
-# tr=tr[::2]
 
-content, text=[],[]
+content, pos=[],[]
+subZero=[(x,0),(y,0),(z,0)]
 mult,letter,symm=None,None,None
 for r in tr:
     if r.find("table"):
-        content.append((mult,letter,symm,text))
-        text=[]
+        content.append((mult,letter,symm,pos))
+        pos=[]
         td=r.find_all("td")
         mult=td[0].text.encode('ascii','ignore')
         letter=td[1].text.encode('ascii','ignore')
@@ -43,11 +46,22 @@ for r in tr:
     nobr=r.find_all("nobr")
     for n in nobr:
         tx=n.text.encode('ascii','ignore')
-        text.append(Matrix(sympify(tx)))
-content.append((mult,letter,symm,text))
+        a=Matrix(sympify(tx))
+        pos.append(a)    
+        for c in coor:
+            b=a+c
+            d=b.subs(subZero)
+            for j in range(len(d)):
+                b[j]=b[j]-1 if d[j]>=1 else b[j]
+                b[j]=b[j]+1 if d[j]<0 else b[j]
+            if not (b in pos):
+                pos.append(b)
+
+content.append((mult,letter,symm,pos))
 content.pop(0)  #Remove the first, null element from the content list
 
 data=[]
+data.append({'Mult': len(coor)+1})
 for x in content:
     data.append({'Mult': x[0], 'Letter': x[1], 'Symm': x[2], 'Pos': x[3]})
 
