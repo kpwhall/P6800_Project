@@ -5,7 +5,7 @@ import requests
 from CSV_IO import csvWrite
 
 # Parameter definitions ############################
-SPACE=189                                                                                       # Space group
+SPACE=199                                                                                       # Space group
 page_link='http://www.cryst.ehu.es/cgi-bin/rep/programs/sam/point.py?sg='+str(SPACE)+'&num=0'   # URL to scrape from
 
 # Collect page data
@@ -34,8 +34,8 @@ for r in tr:
     td=r.find_all("td")
     if td[0].find("sup") and (not '\'' in td[0].find("sup").text):
         name=[]
-        name.append(td[0].text[1:len(td[0].text)/2].encode('ascii','ignore')+"1")
-        name.append(td[0].text[len(td[0].text)/2+1:].encode('ascii','ignore')+"2")
+        name.append(td[0].text[:len(td[0].text)/2].encode('ascii','ignore'))
+        name.append(td[0].text[len(td[0].text)/2:].encode('ascii','ignore'))
         char.append([])
         char.append([])
         for i in range(len(td)-3):
