@@ -67,7 +67,7 @@ for i in range(len(charIR)):
 
 # Print character table to screen
 #   That's it.
-print
+print "\nCHARACTER TABLE:"
 print classList
 for line in charTab:
     print line
@@ -109,14 +109,14 @@ for a in pos:
             c=t[0]*b+t[1]               # Transform
             if not (c in a):            # If outside of cell, place inside.
                 d=c.subs(subZero)       # Substitute symbols to zero
-                for j in range(len(d)): # Attempt to bring into unit cell
+                for j in range(len(d)): # Attempt to bring into primitive cell
                     c[j]=c[j]-1 if d[j]>=1 else c[j]
                     c[j]=c[j]+1 if d[j]<0 else c[j]
                 if not (c in a):        # If still outside
                     for s in shift:     # Apply shifts
                         cShift=c-s
                         d=cShift.subs(subZero)
-                        for j in range(len(d)): # Attempt to bring into unit cell
+                        for j in range(len(d)): # Attempt to bring into primitive cell
                             cShift[j]=cShift[j]-1 if d[j]>=1 else cShift[j]
                             cShift[j]=cShift[j]+1 if d[j]<0 else cShift[j]
                         if (cShift in a):       # If shift works, break.
@@ -146,6 +146,7 @@ for t in transforms:
 #   Simply multiply the wyckoff position atomic character by the displacement
 #   character. The three characters are then ouput for each position.
 #
+print "WYCKOFF POSITION CHARACTERS:"
 char=[]     # Char holds the total character
 for i in range(len(ptitle)):
     char.append([])
@@ -175,7 +176,7 @@ a,ss=[],[]  # a - list of IRs as symbols for symbolic math
 # accept a list of symbols as an argument. It needs that all symbols        #
 # are explicitly listed. By doing this, I am able to store them as a list   #
 # and run the string as if it were code by using the exec command later.    #
-# This allows for generalised code, although it isn't pretty.                #
+# This allows for generalised code, although it isn't pretty.               #
 #############################################################################
 comm="ss=solve_linear_system(system"
 for i in charIR:
@@ -191,6 +192,7 @@ if shift[0] != Matrix(sympify("0,0,0")):        # If the space group isn't type 
 else: 
     print "In space group "+str(SPACE)+" there is 1 primitive cells per unit cell."
 print "The dimensionality of these Wyckoff positions phonon modes should be (Multiplicity)*(Dimensions)/(# Primitive Cells).\n"
+print "IR MULTIPLICITY FOR PHONON MODES:"
 for i in range(len(ptitle)):
     system=systemSeed.col_insert(len(charTab[i]),Matrix(char[i]))   # append the calculated char to the system
     exec(comm)
