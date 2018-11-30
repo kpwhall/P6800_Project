@@ -70,7 +70,13 @@ print
 # Deserialise wyckoff position data
 #   
 #
-perUnitCell=int(wp.pop(0)[0])   # Number of primitive cells per unit cell extracted from data
+shift=[]
+for s in wp.pop(0)[0].replace("[M","M").replace(')]',')').split(', '):
+    if s=='[]':
+        break
+    shift.append(Matrix(sympify(s)))
+if len(shift)==0:
+    shift.append(Matrix(sympify("0,0,0")))
 i=0                             # Iterator
 pos, ptitle=[],[]               # pos contains the Wyckoff positions
                                 # ptitle contains the names of the Wyckoff positions (Multiplicty+Letter)
@@ -98,9 +104,19 @@ for a in pos:
                 for j in range(len(d)):
                     c[j]=c[j]-1 if d[j]>=1 else c[j]
                     c[j]=c[j]+1 if d[j]<0 else c[j]
+                if not (c in a):
+                    for s in shift:
+                        cShift=c-s
+                        d=cShift.subs(subZero)
+                        for j in range(len(d)):
+                            cShift[j]=cShift[j]-1 if d[j]>=1 else cShift[j]
+                            cShift[j]=cShift[j]+1 if d[j]<0 else cShift[j]
+                        if (cShift in a):
+                            c=cShift
+                            break
             if c==b:
                 count+=1
-        achar[i].append(count/perUnitCell)
+        achar[i].append(count)
     i+=1
 
 # Calculate displacement character
@@ -132,7 +148,7 @@ systemSeed=Matrix()
 for r in charTab:
     systemSeed=systemSeed.col_insert(len(systemSeed)/len(r),Matrix(r))   # Need to ensure the columns are lined up correctly.
 
-a=[]
+a,ss=[],[]
 comm="ss=solve_linear_system(system"
 for i in charIR:
     a.append(symbols(str(i)))
