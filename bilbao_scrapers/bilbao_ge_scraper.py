@@ -25,15 +25,15 @@ i=0
 while True:
     if i>=len(tr):
         break
-    elif(not tr[i].find(id=re.compile('^op[0-9]+'))):
+    elif(not tr[i].find(id=re.compile('^op[0-9]+'))):   # Remove rows that don't have an id op#
         tr.remove(tr[i])
     else:
         i+=1
 
 content=[]
-for r in tr:
+for r in tr:    # Go row by row and convert the strings to matrices
     matrix="[["+r.find('pre').text.encode('ascii','ignore').strip().replace('  ', ',').replace('\n','],[').replace(' ',',').replace(',,',',').replace('[,','[')+"]]"
-    ita=r.find_all("td")[6].text.encode('ascii','ignore')
+    ita=r.find_all("td")[6].text.encode('ascii','ignore')   # Get ITA name
     content.append((ita,matrix))
 
 # Serialise collected data for storage
