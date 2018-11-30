@@ -1,12 +1,12 @@
-from CSV_IO import csvRead
+from CSV_IO import csvRead                      # csvRead from CSV_IO.py
 from sympy import symbols, sympify, exp, I, \
-                    pi, solve_linear_system
-from sympy.matrices import Matrix
-import os.path
+                    pi, solve_linear_system     # SymPy for symbolic mathematics.
+from sympy.matrices import Matrix               #
+import os.path                                  # os.path for filepath checking.
 
 # Parameter definitions ############################
-SPACE=int(input("Select a space group (Only 198,204 are testable): "))   # Space group being considered
-x,y,z=symbols('x y z')                                                   # Set x, y, z as symbols for sympy symbolic computation
+SPACE=int(input("Select a space group: "))  # Space group being considered
+x,y,z=symbols('x y z')                      # Set x, y, z as symbols for sympy symbolic computation
 
 # Collect data on space groups
 #   In each case, first check that the file you are looking for exists.
@@ -31,7 +31,7 @@ else:
 # Deserialise group element data
 #   Take each group element in the data and convert it to a form usable by this code.
 #   Collect classes and a single group element from each class by only considering the first part of the name.
-#       This method of getting classes doesn't work as there isn't a 1:1 correlation between element names and class names
+#       This method of getting classes doesn't work in all cases as there isn't a 1:1 correlation between element names and class names
 #
 transforms,classList=[],[]  # transforms Contains list of group elements as a list [Rotation, Transform, Name]    
                             # classList Contains (incorrect, see above) list of classes

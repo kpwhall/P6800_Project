@@ -7,7 +7,7 @@ from sympy.matrices import Matrix
 from CSV_IO import csvWrite
 
 x,y,z=symbols('x y z')
-SPACE=227
+SPACE=199
 
 page_link = 'http://www.cryst.ehu.es/cgi-bin/cryst/programs/nph-wp-list'
 # this is the url that we've already determined is safe and legal to scrape from.

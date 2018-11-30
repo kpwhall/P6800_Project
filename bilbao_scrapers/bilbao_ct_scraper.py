@@ -1,8 +1,8 @@
-# A scraper which collects the Character tables from bilbao
+# bilbao_ct_scraper collects the Character tables and associated data from bilbao
 #
-from bs4 import BeautifulSoup
-import requests
-from CSV_IO import csvWrite
+from bs4 import BeautifulSoup   # BeautifulSoup allows parsing of html.
+import requests                 # Requests for POST/GET requests.
+from CSV_IO import csvWrite     # csvWrite from CSV_IO.py.
 
 # Parameter definitions ############################
 SPACE=199                                                                                       # Space group
@@ -13,19 +13,19 @@ page_link='http://www.cryst.ehu.es/cgi-bin/rep/programs/sam/point.py?sg='+str(SP
 page_response=requests.get(page_link ,timeout=10)
 page_content=BeautifulSoup(page_response.content, "html.parser")
 
+# Parse and serialise data
+#   Parse html data line by line to collect required data.
 tab=page_content.find("table",{"border": "2"})  # Collect first <table> with attribute border=2
 tr=tab.find_all("tr")                           # Collect all <tr> within tab
 
-# Parse data to collect what we need
-#
-fr=tr.pop(0)
-fd=fr.find_all("td")
+fr=tr.pop(0)            # Take first row in tr and store it in a new variable
+fd=fr.find_all("td")    #   and collect the class names from it.
 fd=fd[2:len(fd)-1]
-cls=[]
+cls=[]                  # cls is a list that stores class names.
 for d in fd:
     cls.append(d.text.encode('ascii','ignore'))
 
-if tr[0].find("nobr").text=="Mult.": 
+if tr[0].find("nobr").text=="Mult.":    # Remove IR: Mult.
     tr.pop(0)
 
 content=[]
@@ -55,8 +55,8 @@ for r in tr:
             char.append({cls[i]: string})
         content.append((name,char))
 
-# Collect data in list and write it to a .csv file
-#
+# Collect data for storage
+#   Then write to csv file
 data=[] # List to hold data as series of dicts
 for x in content:
     data.append({"IR": x[0], "Char": x[1]})
