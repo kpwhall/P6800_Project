@@ -68,9 +68,9 @@ for i in range(len(charIR)):
 # Print character table to screen
 #   That's it.
 print "\nCHARACTER TABLE:"
-print classList
-for line in charTab:
-    print line
+print "Classes\t", classList
+for i in range(len(charTab)):
+    print charIR[i],"\t", charTab[i]
 print
 
 # Deserialise wyckoff position data
@@ -198,4 +198,4 @@ for i in range(len(ptitle)):
     exec(comm)
     for j in a:
         ss[j]=ss[j].expand(complex=True)
-    print ptitle[i], ss
+    print ptitle[i], "\t" ,ss
